@@ -1,0 +1,117 @@
+﻿@model PagedList.IPagedList<FleaMarket.Models.Ad>
+@using PagedList.Mvc;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+@Html.AntiForgeryToken()
+<div>
+    @using (Ajax.BeginForm("MyAds", new AjaxOptions { UpdateTargetId = "results" }))
+    {
+         
+        <div class="container table-bordered bg-info">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                    @Html.Label("AdCatId", "категория", new { @class = "control-label" })  <br />
+                    @Html.DropDownList("AdCatId", ViewBag.AdCat as SelectList, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                    @Html.Label("AdTypeId", "тип объявления")   <br />
+                    @Html.DropDownList("AdTypeId", ViewBag.AdType as SelectList, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                    @Html.Label("isAdHeader", "только в заголовках")  @Html.CheckBox("isAdHeader", new { htmlAttributes = new { @class = "form-control" } })<br />
+                    @Html.Editor("searchAdHeader", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 ">
+
+                </div>
+                <div class="col-lg-1 col-md-1 "> <br />    </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                    @Html.Label("AdSortDate", "объявления")   <br />
+                    @Html.DropDownList("AdSortDateId", ViewBag.AdSortDate as SelectList, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                    @Html.Label("AdSortPrice", "цена")   <br />
+                    @Html.DropDownList("AdSortPriceId", ViewBag.AdSortPrice as SelectList, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                    <br /> <input type="submit" value="Искать" class="btn btn-default" />
+
+                </div>
+                <div class="col-lg-1 col-md-1 "> <br /><br><br>    </div>
+
+
+            </div>
+        </div>
+        <div class="container">
+            @foreach (FleaMarket.Models.Ad b in Model)
+            {
+
+                <hr />
+                <div class="row">
+                    @if (b.Image1 != null)
+                    {
+
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            @Html.Raw("<img style='width:100px; height:80px;' src=\"data:image/jpeg;base64,"
+                                     + Convert.ToBase64String(b.Image1) + "\" />")
+                            <br /> <h6><small>@b.AdDateUpdate</small></h6> 
+                            <h6><small><a href="/FleaMarket/UpdateAD/@b.AdId"> Поднять объявление</a></small></h6>
+                        </div>
+                    }
+                    @if (b.Image1 == null)
+                    {
+                        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                    }
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <h5>
+                            @if (@b.AdIsEnable == true)
+                            { <p style="color:green">Активно: </p> }
+                            else
+                            { <p style="color:red">Деактивировано: </p> }
+
+                            @b.AdType.AdTypeName: "@b.AdHeader"
+                        </h5>
+                        <br /> <h6>@b.AdCountWatchngAd просмотров</h6>
+                    </div>
+                    @if (@b.AdText.Length > 300)
+                    {
+                        <div class="col-lg-5 col-md-5 col-sm-5"><h5>@b.AdText.Substring(0, 300)...</h5></div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-5 col-md-5 col-sm-5"><h5>@b.AdText </h5></div>
+                    }
+                    <div class="col-lg-1 col-md-1 col-sm-1"><h5>@b.AdCost руб. <br /> <br />  @b.AdLocation.AdLocationCity</h5></div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                        <h5>
+                            <a href="/FleaMarket/DescriptionAds/@b.AdId"> Подробнее</a>
+                            <br /><a href="/FleaMarket/EditAds/@b.AdId"> Изменить </a>
+                        </h5>
+                        @if (@b.AdIsEnable == true)
+                        {
+                            <h5> <a href="/FleaMarket/ChangeAdStat/@b.AdId"> Деактивировать </a></h5>
+                        }
+                        else
+                        {
+                            <h5> <a href="/FleaMarket/ChangeAdStat/@b.AdId"> Активировать </a></h5>
+                        }
+
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("MyAds", new { page }))
+    @Scripts.Render("~/scripts/jquery-1.10.2.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")

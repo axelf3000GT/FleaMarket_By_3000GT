@@ -1,0 +1,36 @@
+﻿
+@model FleaMarket.Models.Ad
+ 
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <div class="row">
+            <h4>Добавление объявления: Шаг 1</h4>
+            <hr />
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                @Html.DropDownList("AdType", ViewBag.AdType as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AdTypeId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                @Html.DropDownList("AdLocationCountry", ViewBag.AdLocationCountry as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AdLocationId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                @Html.DropDownList("AdLocationCity", ViewBag.AdLocationCity as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AdLocationId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                @Html.DropDownList("AdCatHeader", ViewBag.AdCatHeader as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AdCatId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row"> 
+            <div class="col-lg-11 col-md-11 col-sm-10 col-xs-8"></div>
+            <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4"><input type="submit" value="Далее" class="btn btn-default" /></div>
+           
+       </div>
+
+    </div>
+
+}

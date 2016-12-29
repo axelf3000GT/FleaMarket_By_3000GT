@@ -1,0 +1,96 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background: #FFFFF0;
+    font: 12pt Play-Bold;
+
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+
+}  
+.bg-info{
+    background-color : 	#FFFAFA;
+} 
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+ 
+.row {
+    margin-top : 10px;
+}
+.width-editor-county {
+    width : 200px;
+}
+navbar-header{
+    color:azure;
+}
+container
+    {
+        background-color:#000;
+        width:80%;
+        margin:15% auto;
+    }
+label
+{
+    font-weight: inherit;
+}
+.raz div {
+  float: right; /* блок занимает ширину содержимого, max-width её ограничивает */
+  max-width: 8em;
+  min-height: 2em;
+  border: 1px solid orange;
+  background: #fff5d7;
+}
+.blokimg {
+            position: relative;
+        }
+
+        .overlay {
+            display: none;
+            height: auto;
+            left: -15%;
+            position: absolute;
+            top: -50%;
+            width: auto;
+            z-index: 999;
+        }
+
+            .overlay .overlay_container {
+                display: table-cell;
+                vertical-align: middle; 
+            }
+
+        .overlay_container img {
+            background-color: #AB5;
+            padding: 10px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            margin: auto;
+        }
+
+        .overlay:target {
+            display: table;
+        }
+
+
+.adtrue {
+    color : green;
+    font-size: 200%;
+}
+
+.adfalse { 
+    color : red;
+    font-size: 200%;
+}

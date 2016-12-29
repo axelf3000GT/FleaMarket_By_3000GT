@@ -1,0 +1,84 @@
+﻿@model FleaMarket.Models.Ad
+
+<h4>Добавление объявления: Шаг 2</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal table-bordered">
+        <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
+            <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>@ViewBag.AdLocationCountry @ViewBag.AdLocationCity район </b></div>
+            <div class="col-md-5 col-xs-4 col-lg-4">
+                @Html.DropDownList("AdLocationArea", ViewBag.AdLocationArea as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AdLocationId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
+            <div class="control-label col-md-2 col-xs-3 col-lg-2 "><b>Раздел</b></div>
+            <div class="col-md-5 col-xs-4 col-lg-4">
+                @Html.DropDownList("AdCatSubHeader", ViewBag.AdCatSubHeader as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AdCatId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
+            <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>Заголовок</b></div>
+            <div class="col-md-8 col-xs-7 col-lg-8">
+                @Html.EditorFor(model => model.AdHeader, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdHeader, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
+            <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>Опишите товар или услугу:</b></div>
+            <div class="col-md-8 col-xs-7 col-lg-8">
+                @Html.EditorFor(model => model.AdText, new { htmlAttributes = new { @class = "form-control", rows = 10 } })
+                @Html.ValidationMessageFor(model => model.AdText, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
+            <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>Цена руб.</b></div>
+            <div class="col-md-3 col-lg-2 col-sm-3 col-xs-4">
+                @Html.EditorFor(model => model.AdCost, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdCost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
+            <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>Контактный номер</b></div>
+            <div class="col-md-3 col-lg-3 col-sm-5 col-xs-6">
+                @Html.EditorFor(model => model.AdPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdPhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <fieldset>
+            <div class="form-group">
+                <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
+                <div class="col-md-4 col-lg-4 col-sm-5 col-xs-6"><b>Буду загружать фотографии? </b> @Html.CheckBox("IsImages", false)  </div>
+            </div>
+        </fieldset>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 col-xs-9 col-lg-10">
+                <input type="button" value="Назад" onclick="@("window.location.href='" + @Url.Action("AddNewAdsSelectCity", "FleaMarket") + "'");" class="btn btn-default" />
+                <input type="submit" value="Далее" class="btn btn-default" />
+            </div>
+        </div>
+        <br />
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
