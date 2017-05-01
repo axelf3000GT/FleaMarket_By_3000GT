@@ -60,11 +60,14 @@ namespace FleaMarket
             //   appId: "",
             //   appSecret: "");
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "96506011335-phsiq4ru3q0575souqf27u4gkvmn2qqs.apps.googleusercontent.com",
-                ClientSecret = "K04X3LAdiusbZgnG7vHPz8IE"
-            });
+           // app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+           // {
+                //ClientId = "96506011335-phsiq4ru3q0575souqf27u4gkvmn2qqs.apps.googleusercontent.com",
+                //ClientSecret = "K04X3LAdiusbZgnG7vHPz8IE"
+                //отличная барахолка.рус
+                //ClientId = "1054982447675-jv1u7tc9hf9jhuukj2j02c22nvt2ht5o.apps.googleusercontent.com",
+                //ClientSecret = "VH8YmdP12L14f1lXYMlSKCcZ"
+            //});
         }
     }
 }

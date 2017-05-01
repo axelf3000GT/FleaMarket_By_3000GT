@@ -1,0 +1,144 @@
+﻿@model FleaMarket.Models.News
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Редактирование новости</title>
+</head>
+<body>
+    @using (Html.BeginForm("EditNews", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.NewsId)
+            @Html.HiddenFor(model => model.NewsUserId)
+            @Html.HiddenFor(model => model.NewsDateLastEditing)
+            @Html.HiddenFor(model => model.NewsDateAdd)
+            @Html.HiddenFor(model => model.NewsImageLogo)
+            @Html.HiddenFor(model => model.NewsImageLogoMini)
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    <h4>Категория</h4> @Html.DropDownList("NewsCatId", ViewBag.NewsCats as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NewsCatId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <h4>Заголовок</h4> @Html.EditorFor(model => model.NewsHeader, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <p>Изображение главной страницы <input type="file" name="uploadImage1" accept="image/x-png,image/gif,image/jpeg" /> </p>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <h4 class="text-center">HTML текст объявления</h4>
+                     
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+                        <button id="ajaxP" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<p>', '</p>'); return false;">P</button> <br />
+                        <button id="ajaxB" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<b>', '</b>'); return false;"><b>B</b></button> <br />
+                        <button id="ajaxBR" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '', '</br>'); return false;">BR</button> <br />
+                        <button id="ajaxIMG" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<img src=\' ', '\' class=\'img-thumbnail\'>'); return false;">IMG</button> <br />
+
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                        @Html.TextAreaFor(model => model.NewsText, new { @class = "form-control", id = "NewsText", cols = 35, @rows = 20 })
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+                        <button id="ajaxH1" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<h1>', '</h1>'); return false;"><h1>H1</h1></button> <br />
+                        <button id="ajaxH2" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<h2>', '</h2>'); return false;"><h2>H2</h2></button> <br />
+                        <button id="ajaxH3" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<h3>', '</h3>'); return false;"><h3>H3</h3></button> <br />
+                        <button id="ajaxH4" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<h4>', '</h4>'); return false;"><h4>H4</h4></button> <br />
+                        <button id="ajaxH5" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<h5>', '</h5>'); return false;"><h5>H5</h5></button> <br />
+                        <button id="ajaxH6" type="button" class="btn btn-sm btn-group btn-info btn-size" onclick="wrapTag(document.getElementById('NewsText'), '<h6>', '</h6>'); return false;"><h6>H6</h6></button> <br />
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <h4 class="text-center">Текст отображаемый в описаний объявления</h4> @Html.TextAreaFor(model => model.NewsTextDescription, new { @class = "form-control", id = "NewsTextDescription", cols = 35, @rows = 13 })
+                </div>
+            </div>
+        </div>
+        <input type="button" value="Назад" onclick="@("window.location.href='" + @Url.Action("ListNews", "News") + "'");" class="btn btn-default" />
+
+        <input type="submit" value="Сохранить" class="btn  btn-success" /> <br />
+    }
+
+
+    <div>
+        
+
+    </div>
+</body>
+</html>
+
+@Scripts.Render("~/scripts/jquery.selection.js")
+@section scripts{ 
+    <script type="text/javascript">
+
+       
+
+        function wrapTag(textArea, openTag, closeTag) {
+            //IE
+            if (document.selection) {
+                textArea.focus();
+                sel = document.selection.createRange();
+                if (sel.text.length > 0) {
+                    sel.text = openTag + sel.text + closeTag;
+                } else {
+                    // тут возможно расширить функционал и выводить для начала
+                    // только первую часть тэга. Но мы будем делать так как и прежде.
+                    sel.text = openTag + sel.text + closeTag;
+                }
+                textArea.focus();
+            }
+                //MOZILLA
+            else if (textArea.selectionStart || textArea.selectionStart == '0') {
+                var startPos = textArea.selectionStart;
+                var endPos = textArea.selectionEnd;
+                var cursorPos = endPos;
+                var scrollTop = textArea.scrollTop;
+
+                if (startPos != endPos) {
+                    textArea.value = textArea.value.substring(0, startPos)
+                                  + openTag
+                                  + textArea.value.substring(startPos, endPos)
+                                  + closeTag
+                                  + textArea.value.substring(endPos, textArea.value.length);
+                    cursorPos += openTag.length + closeTag.length;
+                } else {
+                    // выводим так же, но могли бы и выводить только первую половину тэга.
+                    // А в дальнейшем при повторном нажакии клавиши закрывать его.
+                    textArea.value = textArea.value.substring(0, startPos)
+                                  + openTag
+                                  + textArea.value.substring(startPos, endPos)
+                                  + closeTag
+                                  + textArea.value.substring(endPos, textArea.value.length);
+                    cursorPos += openTag.length + closeTag.length;
+                }
+                textArea.focus();
+                // Ставим курсор в конец выделенного текста
+                // Снимаем выделение
+                textArea.selectionStart = cursorPos;
+                textArea.selectionEnd = cursorPos;
+                textArea.scrollTop = scrollTop;
+            } else {
+                textArea.value += openTag + closeTag;
+                textArea.focus();
+            }
+        }
+    </script>
+}

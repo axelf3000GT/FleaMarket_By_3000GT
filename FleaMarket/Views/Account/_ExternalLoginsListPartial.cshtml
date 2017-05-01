@@ -1,14 +1,13 @@
 ﻿@model FleaMarket.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Авторизоваться с помощью:</h4>
-<hr />
+  
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
     if (loginProviders.Count() == 0) {
         <div>
             <p>
-                Конфигурация авторизации через социальные сети не настроена
+               
             </p>
         </div>
     }

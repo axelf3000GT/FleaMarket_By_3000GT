@@ -1,6 +1,8 @@
-﻿
-@model FleaMarket.Models.Ad
- 
+﻿@model FleaMarket.Models.Ad
+ @{
+     ViewBag.Title = "Выбор города и типа объявления";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @using (Html.BeginForm())
 {
     <div class="container">

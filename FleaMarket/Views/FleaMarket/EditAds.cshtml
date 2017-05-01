@@ -1,185 +1,223 @@
 ﻿@model FleaMarket.Models.Ad
-
-<h3 style="text-align:center; font: 13pt Play-Bold ">Ваше объявление</h3>
-
+@{
+    ViewBag.Title = "Редактирование объявления";
+}
+@Styles.Render("~/scripts/lightgallery/skins/default/style.css") 
 @using (Html.BeginForm("EditAds", "FleaMarket", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="container">
-        <div class="col-md-4 col-lg-4 col-sm-5">
-            <fieldset>
-                <div class="thumbnail">
-                    @if (Model.Image1 != null)
-                        {
-                        @Html.Raw("<img style='width:320px; height:240px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Image1) + "\" />")
-                        <div class="caption">
-                            <h4> Изменить фото 1</h4>
-                            <input type="file" name="uploadImage1" />
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="caption">
-                            <h4> Добавить фото 1</h4>
-                            <input type="file" name="uploadImage1" />
-                        </div>
-                        }
+        <div class="col-md-5 col-lg-5 col-sm-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                   Фото
                 </div>
-                <br />
-                <div class="thumbnail">
-                    @if (Model.Image2 != null)
-                        {
-                        @Html.Raw("<img style='width:320px; height:240px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Image2) + "\" />")
-                        <div class="caption">
-                            <h4> Изменить фото 2</h4>
-                            <input type="file" name="uploadImage2" />
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="caption">
-                            <h4> Добавить фото 2</h4>
-                            <input type="file" name="uploadImage2" />
-                        </div>
-                        }
+                <div class="panel-body">
 
-                </div>
-                <br />
-                <div class="thumbnail">
-                    @if (Model.Image3 != null)
-                        {
-                        @Html.Raw("<img style='width:320px; height:240px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Image3) + "\" />")
-                        <div class="caption">
-                            <h4> Изменить фото 3</h4>
-                            <input type="file" name="uploadImage3" />
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="caption">
-                            <h4> Добавить фото 3</h4>
-                            <input type="file" name="uploadImage3" />
-                        </div>
-                        }
-                </div>
-                <br />
-                <div class="thumbnail">
-                    @if (Model.Image4 != null)
-                        {
-                        @Html.Raw("<img style='width:320px; height:240px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Image4) + "\" />")
-                        <div class="caption">
-                            <h4> Изменить фото 4</h4>
-                            <input type="file" name="uploadImage4" />
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="caption">
-                            <h4> Добавить фото 4</h4>
-                            <input type="file" name="uploadImage4" />
-                        </div>
-                        }
 
+                    <fieldset>
+                        <div class="thumbnail">
+                            @if (Model.Image1 != null)
+                            {
+                                <a href="~/content/images/@Model.Image1" rel="lightgallery[pictureAD]"><img src="~/content/images/@Model.Image1min" alt="" /></a>
+                                <div class="caption">
+                                    <h4>Изменить фото 1 </h4><input type="file" name="uploadImage1" />
+                                    <h4> <small> @Html.CheckBox("CheckBoxuploadImage1", false) удалить</small></h4>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="caption">
+                                    <h4> Добавить фото 1</h4>
+                                    <input type="file" name="uploadImage1" />
+                                </div>
+                            }
+                        </div>
+                        <br />
+                        <div class="thumbnail">
+                            @if (Model.Image2 != null)
+                            {
+                                <a href="~/content/images/@Model.Image2" rel="lightgallery[pictureAD]"><img src="~/content/images/@Model.Image2min" alt="" /></a>
+                                <div class="caption">
+                                    <h4>Изменить фото 2 </h4><input type="file" name="uploadImage2" />
+                                    <h4> <small> @Html.CheckBox("CheckBoxuploadImage2", false) удалить</small></h4>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="caption">
+                                    <h4> Добавить фото 2</h4>
+                                    <input type="file" name="uploadImage2" />
+                                </div>
+                            }
+
+                        </div>
+                        <br />
+                        <div class="thumbnail">
+                            @if (Model.Image3 != null)
+                            {
+                                <a href="~/content/images/@Model.Image1" rel="lightgallery[pictureAD]"><img src="~/content/images/@Model.Image3min" alt="" /></a>
+                                <div class="caption">
+                                    <h4>Изменить фото 3 </h4><input type="file" name="uploadImage3" />
+                                    <h4> <small> @Html.CheckBox("CheckBoxuploadImage3", false) удалить</small></h4>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="caption">
+                                    <h4> Добавить фото 3</h4>
+                                    <input type="file" name="uploadImage3" />
+                                </div>
+                            }
+                        </div>
+                        <br />
+                        <div class="thumbnail">
+                            @if (Model.Image4 != null)
+                            {
+                                <a href="~/content/images/@Model.Image1" rel="lightgallery[pictureAD]"><img src="~/content/images/@Model.Image4min" alt="" /></a>
+                                <div class="caption">
+                                    <h4>Изменить фото 4 </h4><input type="file" name="uploadImage4" />
+                                    <h4> <small> @Html.CheckBox("CheckBoxuploadImage4", false) удалить</small></h4>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="caption">
+                                    <h4> Добавить фото 4</h4>
+                                    <input type="file" name="uploadImage4" />
+                                </div>
+                            }
+
+                        </div>
+                        <br />
+                        <div class="thumbnail">
+                            @if (Model.Image5 != null)
+                            {
+                                <a href="~/content/images/@Model.Image1" rel="lightgallery[pictureAD]"><img src="~/content/images/@Model.Image5min" alt="" /></a>
+                                <div class="caption">
+                                    <h4>Изменить фото 5 </h4><input type="file" name="uploadImage5" />
+                                    <h4> <small> @Html.CheckBox("CheckBoxuploadImage5", false) удалить</small></h4>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="caption">
+                                    <h4> Добавить фото 5</h4>
+                                    <input type="file" name="uploadImage5" />
+                                </div>
+                            }
+                        </div>
+                        <br />
+                        <div class="thumbnail">
+                            @if (Model.Image6 != null)
+                            {
+                                <a href="~/content/images/@Model.Image1" rel="lightgallery[pictureAD]"><img src="~/content/images/@Model.Image6min" alt="" /></a>
+                                <div class="caption">
+                                    <h4>Изменить фото 6 </h4><input type="file" name="uploadImage6" />
+                                    <h4> <small> @Html.CheckBox("CheckBoxuploadImage6", false) удалить</small></h4>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="caption">
+                                    <h4> Добавить фото 6</h4>
+                                    <input type="file" name="uploadImage6" />
+                                </div>
+                            }
+                        </div>
+                    </fieldset>
                 </div>
-                <br />
-                <div class="thumbnail">
-                    @if (Model.Image5 != null)
-                        {
-                        @Html.Raw("<img style='width:320px; height:240px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Image5) + "\" />")
-                        <div class="caption">
-                            <h4> Изменить фото 5</h4>
-                            <input type="file" name="uploadImage5" />
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="caption">
-                            <h4> Добавить фото 5</h4>
-                            <input type="file" name="uploadImage5" />
-                        </div>
-                        }
-                </div>
-                <br />
-                <div class="thumbnail">
-                    @if (Model.Image6 != null)
-                        {
-                        @Html.Raw("<img style='width:320px; height:240px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Image5) + "\" />")
-                        <div class="caption">
-                            <h4> Изменить фото 6</h4>
-                            <input type="file" name="uploadImage6" />
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="caption">
-                            <h4> Добавить фото 6</h4>
-                            <input type="file" name="uploadImage6" />
-                        </div>
-                        }
-                </div>
-            </fieldset>
+            </div>
         </div>
-        <div class="col-md-8 col-lg-8 col-sm-7">
-            <div class="form-horizontal"> 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.AdId)
-                @Html.HiddenFor(model => model.AdCatId)
-                @Html.HiddenFor(model => model.AdTypeId)
-                @Html.HiddenFor(model => model.AdLocationId)
-                @Html.HiddenFor(model => model.AdDateAdd)
-                @Html.HiddenFor(model => model.AdDateUpdate)
-                @Html.HiddenFor(model => model.AdDateLastEditing)
-                @Html.HiddenFor(model => model.AdIsEnable)
-                @Html.HiddenFor(model => model.AdUserId)
-                @Html.HiddenFor(model => model.AdCountWatchngAd)
-                @Html.HiddenFor(model => model.AdCountWatchingPhone)
-                @Html.HiddenFor(model => model.AdUserLastBuildingId)
-                @Html.HiddenFor(model => model.AdAuctionStartCost)
-                @Html.HiddenFor(model => model.AdAuctionLastCost)
-                @Html.HiddenFor(model => model.AdAuctionDateEnd)
-                @Html.HiddenFor(model => model.Image1)
-                @Html.HiddenFor(model => model.Image2)
-                @Html.HiddenFor(model => model.Image3)
-                @Html.HiddenFor(model => model.Image4)
-                @Html.HiddenFor(model => model.Image5)
-                @Html.HiddenFor(model => model.Image6)
-
-
-                <div class="form-group ">
-                    <div class="col-md-8 col-lg-8 ">
-                        Название товара/услуги @Html.EditorFor(model => model.AdHeader, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AdHeader, "", new { @class = "text-danger" })
-                    </div>
+        <div class="col-md-7 col-lg-7 col-sm-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Основная информация
                 </div>
+                <div class="panel-body">
 
-                <div class="form-group">
-                    <div class="col-md-8 col-lg-8 ">
-                        Описание @Html.EditorFor(model => model.AdText, new { htmlAttributes = new  { @class = "form-control", rows = 10 } })
-                        @Html.ValidationMessageFor(model => model.AdText, "", new { @class = "text-danger" })
-                    </div>
-                </div>
 
-                <div class="form-group"> 
-                    <div class="col-md-3 col-lg-2 col-sm-3 col-xs-4">
-                        Цена @Html.EditorFor(model => model.AdCost, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AdCost, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.AdId)
+                        @Html.HiddenFor(model => model.AdCatId)
+                        @Html.HiddenFor(model => model.AdTypeId)
+                        @Html.HiddenFor(model => model.AdCity)
+                        @Html.HiddenFor(model => model.AdLocationId)
+                        @Html.HiddenFor(model => model.AdDateAdd)
+                        @Html.HiddenFor(model => model.AdDateUpdate)
+                        @Html.HiddenFor(model => model.AdDateLastEditing)
+                        @Html.HiddenFor(model => model.AdIsEnable)
+                        @Html.HiddenFor(model => model.AdUserId)
+                        @Html.HiddenFor(model => model.AdCountWatchngAd)
+                        @Html.HiddenFor(model => model.AdCountWatchingPhone)
+                        @Html.HiddenFor(model => model.AdUserLastBuildingId)
+                        @Html.HiddenFor(model => model.AdAuctionStartCost)
+                        @Html.HiddenFor(model => model.AdAuctionLastCost)
+                        @Html.HiddenFor(model => model.AdAuctionDateEnd)
+                        @Html.HiddenFor(model => model.Image1)
+                        @Html.HiddenFor(model => model.Image1min)
+                        @Html.HiddenFor(model => model.Image2)
+                        @Html.HiddenFor(model => model.Image2min)
+                        @Html.HiddenFor(model => model.Image3)
+                        @Html.HiddenFor(model => model.Image3min)
+                        @Html.HiddenFor(model => model.Image4)
+                        @Html.HiddenFor(model => model.Image4min)
+                        @Html.HiddenFor(model => model.Image5)
+                        @Html.HiddenFor(model => model.Image5min)
+                        @Html.HiddenFor(model => model.Image6)
+                        @Html.HiddenFor(model => model.Image6min)
 
-                <div class="form-group"> 
-                    <div class="col-md-3 col-lg-3 col-sm-5 col-xs-6">
-                        Телефон @Html.EditorFor(model => model.AdPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AdPhoneNumber, "", new { @class = "text-danger" })
+
+                        <div class="form-group ">
+                            <div class="col-md-12 col-lg-12  ">
+                                Название товара/услуги @Html.EditorFor(model => model.AdTopic, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AdTopic, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-lg-12 ">
+                                Описание @Html.EditorFor(model => model.AdText, new { htmlAttributes = new { @class = "form-control", rows = 10 } })
+                                @Html.ValidationMessageFor(model => model.AdText, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4 col-lg-3 col-sm-4 col-xs-6">
+                                Цена руб. @Html.EditorFor(model => model.AdCost, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AdCost, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-9">
+                                Телефон @Html.EditorFor(model => model.AdPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AdPhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3 col-lg-3 col-sm-5 col-xs-6">
+                                <input type="submit" value="Сохранить" class="btn btn-default" />
+                                <input type="button" value="Не сохранять и вернуться к объявлениям" onclick="@("window.location.href='" + @Url.Action("Index", "FleaMarket") + "'");" class="btn btn-default" />
+
+
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="container">
-                    <input type="button" value="Не сохранять и вернуться к объявлениям" onclick="@("window.location.href='" + @Url.Action("Index", "FleaMarket") + "'");" class="btn btn-default" />
-                    <input type="submit" value="Сохранить" class="btn btn-default" />
                 </div>
             </div>
         </div>
     </div>
-     
-    
+
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section ImageZoom {
+    <script src="~/scripts/lightgallery/lightgallery.min.js" type="text/javascript"></script>
+    <script>lightgallery.init();</script>
 }

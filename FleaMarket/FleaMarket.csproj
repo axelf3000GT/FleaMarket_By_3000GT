@@ -18,9 +18,10 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44300</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -58,6 +59,14 @@
     </Reference>
     <Reference Include="ImageResizer, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ImageResizer.4.0.5\lib\net45\ImageResizer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageResizer.Plugins.DiskCache, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageResizer.Plugins.DiskCache.4.0.5\lib\net45\ImageResizer.Plugins.DiskCache.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageResizer.Plugins.PrettyGifs, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageResizer.Plugins.PrettyGifs.4.0.5\lib\net45\ImageResizer.Plugins.PrettyGifs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -187,12 +196,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FleaMarketController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612271427435_aspnet-FleaMarket-20161202021115.cs" />
-    <Compile Include="Migrations\201612271427435_aspnet-FleaMarket-20161202021115.Designer.cs">
-      <DependentUpon>201612271427435_aspnet-FleaMarket-20161202021115.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -222,6 +228,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\axelf3000gtX.pubxml" />
+    <None Include="Properties\PublishProfiles\ftp.Smarterasp.net.pubxml" />
+    <None Include="Properties\PublishProfiles\reg.ru_отличнаябарахолка.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -285,6 +293,20 @@
     <Content Include="Views\FleaMarket\SendComplaint.cshtml" />
     <Content Include="Views\FleaMarket\PayForAd.cshtml" />
     <Content Include="Views\FleaMarket\AdPayForUpdate.cshtml" />
+    <Content Include="Views\Account\AwaitConfirm.cshtml" />
+    <Content Include="Views\FleaMarket\Err.cshtml" />
+    <Content Include="Views\FleaMarket\TitelPage.cshtml" />
+    <Content Include="Views\FleaMarket\DetailPhoneNumber.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\DescriptionNews.cshtml" />
+    <Content Include="Views\News\AddNewNews.cshtml" />
+    <Content Include="Views\News\ListNews.cshtml" />
+    <Content Include="Views\News\EditNews.cshtml" />
+    <Content Include="Views\News\ListNewsPart.cshtml" />
+    <Content Include="Views\News\DelNews.cshtml" />
+    <Content Include="Views\FleaMarket\ChangeAdStat.cshtml" />
+    <Content Include="Views\FleaMarket\DelAd.cshtml" />
+    <Content Include="Views\FleaMarket\HomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -294,11 +316,6 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612271427435_aspnet-FleaMarket-20161202021115.resx">
-      <DependentUpon>201612271427435_aspnet-FleaMarket-20161202021115.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -314,16 +331,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49564</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44300/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

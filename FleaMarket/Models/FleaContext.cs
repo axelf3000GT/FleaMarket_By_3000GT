@@ -18,7 +18,7 @@ namespace FleaMarket.Models
         public DbSet<News> Newss { get; set; }
         public DbSet<NewsCat> NewsCats { get; set; }
         public DbSet<AdUserdComplaint> AdUserdComplaints { get; set; }
-      
+        public DbSet<Op> Ops { get; set; }
     }
      
 }

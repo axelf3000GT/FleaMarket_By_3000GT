@@ -1,22 +1,27 @@
 ﻿@model FleaMarket.Models.Ad 
+@{
+    ViewBag.Title = "Добавление картинок для объявления";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @using (Html.BeginForm("AddNewAdsPictures", "FleaMarket", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Добавление изображений: Шаг 3</legend>
-        <input type="file" name="uploadImage1" />
-        <input type="file" name="uploadImage2" />
-        <input type="file" name="uploadImage3" />
-        <input type="file" name="uploadImage4" />
-        <input type="file" name="uploadImage5" />
-        <input type="file" name="uploadImage6" />
+        <input type="file" name="uploadImage1" accept="image/x-png,image/gif,image/jpeg" />
+        <input type="file" name="uploadImage2" accept="image/x-png,image/gif,image/jpeg"  />
+        <input type="file" name="uploadImage3" accept="image/x-png,image/gif,image/jpeg" />
+        <input type="file" name="uploadImage4" accept="image/x-png,image/gif,image/jpeg" />
+        <input type="file" name="uploadImage5" accept="image/x-png,image/gif,image/jpeg" />
+        <input type="file" name="uploadImage6" accept="image/x-png,image/gif,image/jpeg" />
         <br />
+        <h3><small>Максимальный совокупный размер фото не должен превышать 100 мегабайт</small></h3>
         <p> <input type="submit" value="Добавить и опубликовать" class="btn btn-default" />    </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Вернуться к списку", "Index")
+    @Html.ActionLink("Не добавлять фото", "Index")
 </div>
 
 @section Scripts {

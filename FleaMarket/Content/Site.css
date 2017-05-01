@@ -1,20 +1,59 @@
-﻿body {
+﻿ 
+body { 
     padding-top: 50px;
     padding-bottom: 20px;
-    background: #FFFFF0;
-    font: 12pt Play-Bold;
-
+      background: #FFFFF0;
+    background-image: url("../Content/bg.jpg");
+    background-repeat: repeat-y, repeat-y;
+    background-attachment: fixed, fixed;
+    font-family: 'BitterRegular', Arial, sans-serif; 
+    color:black;
 }
+ 
 
+h1, h2, h3, h4, h5, h6, p {
+    font-family: 'BitterRegular', Arial, sans-serif;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    color:black;
+}
+b{
+    font-family: 'BitterBold', Arial, sans-serif;
+}
+img{
+    position:center; 
+}
+ 
+.navbar-brand {
+    color : white; 
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 
-}  
+}   
 .bg-info{
-    background-color : 	#FFFAFA;
-} 
+    background-color : 	#c07d2e;
+    background:rgba(255,255,255,0.8);
+}  
+.bg-Ad-list{
+    background-color : 	#a2c975;
+    background:rgba(255,255,255,0.5);
+}   
+.bg-news-description{
+      background-color : 	#a2c975;
+    background:rgba(255,255,255,0.3);
+}
+
+.bg-viewNews{
+    background-color : 	#fbffca;
+}
+.imgCenter {
+    display: block; /* Блочный элемент (для старых браузеров) */
+    text-align: center; /* Выравнивание по центру */  
+
+}
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -93,4 +132,98 @@ label
 .adfalse { 
     color : red;
     font-size: 200%;
+}
+ 
+
+.btn-primary{ 
+background-color: red; 
+color: white; 
+}
+ 
+ 
+@font-face {
+    font-family: "BitterRegular";
+    src: url("../fonts/BitterRegular/BitterRegular.eot");
+    src: url("../fonts/BitterRegular/BitterRegular.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/BitterRegular/BitterRegular.woff") format("woff"),
+    url("../fonts/BitterRegular/BitterRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+.image {
+	position	: relative;
+	width		: 100%; /* for IE 6 */
+
+}
+
+
+.hovergallery img{
+-webkit-transform:scale(0.8); /*Webkit: уменьшаем размер до 0.8*/
+-moz-transform:scale(0.8); /*Mozilla: масштабирование*/
+-o-transform:scale(0.8); /*Opera: масштабирование*/
+-webkit-transition-duration: 1.5s; /*Webkit: длительность анимации*/
+-moz-transition-duration: 1.5s; /*Mozilla: длительность анимации*/
+-o-transition-duration: 1.5s; /*Opera: длительность анимации*/
+opacity: 1.0; /*Начальная прозрачность изображений*/
+margin: 0 10px 5px 0; /*Интервалы между изображениями*/
+}
+.hovergallery img:hover{
+-webkit-transform:scale(1.0); /*Webkit: увеличиваем размер до 1.2x*/
+-moz-transform:scale(1.0); /*Mozilla: масштабирование*/
+-o-transform:scale(1.0); /*Opera: масштабирование*/
+box-shadow:0px 0px 60px gray; /*CSS3 тени: 30px размытая тень вокруг всего изображения*/
+-webkit-box-shadow:0px 0px 60px gray; /*Webkit: тени*/
+-moz-box-shadow:0px 0px 60px gray; /*Mozilla: тени*/
+opacity: 1.1;
+}
+
+textarea {
+    width: 90%; /* Ширина поля в процентах */
+    height: 200px; /* Высота поля в пикселах */
+    resize: none; /* Запрещаем изменять размер */
+   }  
+
+.paddings{
+    background-color: #f4f8fb;
+    padding-top: 15px;
+    padding-right: 30px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+}
+
+.btn-size{
+width : 70px;
+}
+
+
+/* font-family: "BitterBold"; */
+@font-face {
+    font-family: "BitterBold";
+    src: url("../fonts/BitterBold/BitterBold.eot");
+    src: url("../fonts/BitterBold/BitterBold.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/BitterBold/BitterBold.woff") format("woff"),
+    url("../fonts/BitterBold/BitterBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "BitterItalic"; */
+@font-face {
+    font-family: "BitterItalic";
+    src: url("../fonts/BitterItalic/BitterItalic.eot");
+    src: url("../fonts/BitterItalic/BitterItalic.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/BitterItalic/BitterItalic.woff") format("woff"),
+    url("../fonts/BitterItalic/BitterItalic.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "BitterBoldItalic"; */
+@font-face {
+    font-family: "BitterBoldItalic";
+    src: url("../fonts/BitterBoldItalic/BitterBoldItalic.eot");
+    src: url("../fonts/BitterBoldItalic/BitterBoldItalic.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/BitterBoldItalic/BitterBoldItalic.woff") format("woff"),
+    url("../fonts/BitterBoldItalic/BitterBoldItalic.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
 }

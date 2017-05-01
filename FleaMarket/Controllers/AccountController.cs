@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FleaMarket.Models;
+using System.Net.Mail;
 
 namespace FleaMarket.Controllers
 {
@@ -68,28 +69,44 @@ namespace FleaMarket.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
-            }
+                var user = await UserManager.FindAsync(model.Email, model.Password);
+                if (user != null)
+                {
+                    if (user.EmailConfirmed == true)
+                    {
+                        var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                        switch (result)
+                        {
+                            case SignInStatus.Success:
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                                return RedirectToLocal(returnUrl);
+                            case SignInStatus.LockedOut:
+                                return View("Lockout");
+                            case SignInStatus.RequiresVerification:
+                                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                            case SignInStatus.Failure:
+
+                            default:
+                                ModelState.AddModelError("", "Неверный email или пароль");
+                                return View(model);
+                        }
+                        //return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Не подтвержден email. Если письмо не отображается в основной папке входящих, вероятно оно попало в СПАМ");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неверный email или пароль");
+                }
             }
+            return View(model);
         }
+         
 
         //
         // GET: /Account/VerifyCode
@@ -129,7 +146,7 @@ namespace FleaMarket.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", "Неверный код.");
                     return View(model);
             }
         }
@@ -153,37 +170,75 @@ namespace FleaMarket.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+              
+                user.Email = model.Email;
+                user.EmailConfirmed = false; 
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "user");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "FleaMarket");
+                    // наш email с заголовком письма
+                    MailAddress from = new MailAddress("otlichnayabarakholka@gmail.com", "Web Registration");
+                    // кому отправляем
+                    MailAddress to = new MailAddress(user.Email);
+                    // создаем объект сообщения
+                    MailMessage m = new MailMessage(from, to);
+                    // тема письма
+                    m.Subject = "Email confirmation";
+                    // текст письма - включаем в него ссылку
+                    m.Body = string.Format("Для завершения регистрации перейдите по ссылке:" +
+                                    "<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>",
+                        Url.Action("ConfirmEmail", "Account", new { Token = user.Id, Email = user.Email }, Request.Url.Scheme));
+                    m.IsBodyHtml = true;
+                    // адрес smtp-сервера, с которого мы и будем отправлять письмо
+                    
+                    SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587);
+                    // логин и пароль
+                    smtp.Credentials = new System.Net.NetworkCredential("otlichnayabarakholka@gmail.com", "GT69camaro");
+                    smtp.EnableSsl = true;
+                    smtp.Send(m);
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return RedirectToAction("Confirm", "Account", new { Email = user.Email });
                 }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
+                else
+                {
+                    AddErrors(result);
+                }
+           
+            } 
             return View(model);
         }
-
-        //
-        // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public string Confirm(string Email)
         {
-            if (userId == null || code == null)
+            return "На почтовый адрес " + Email + " Вам высланы дальнейшие " +
+                    "инструкции по завершению регистрации";
+        }
+
+
+        [AllowAnonymous]
+        public async Task<ActionResult> ConfirmEmail(string Token, string Email)
+        {
+            ApplicationUser user = this.UserManager.FindById(Token);
+            if (user != null)
             {
-                return View("Error");
+                if (user.Email == Email)
+                { 
+                    user.EmailConfirmed = true;
+                    await UserManager.UpdateAsync(user);
+                    //await SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Login", "Account", new { ConfirmedEmail = user.Email });
+                }
+                else
+                {
+                    return RedirectToAction("Confirm", "Account", new { Email = user.Email });
+                }
             }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            else
+            {
+                return RedirectToAction("Confirm", "Account", new { Email = "" });
+            }
         }
 
         //
@@ -206,19 +261,15 @@ namespace FleaMarket.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
-
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account",
+                    new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Сброс пароля",
+                    "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

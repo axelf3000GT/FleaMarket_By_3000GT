@@ -1,0 +1,30 @@
+﻿@model IEnumerable<FleaMarket.Models.News>
+
+<div id="searchresults">
+    @foreach (FleaMarket.Models.News b in Model)
+    {
+        <hr />
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <h5>@b.NewsHeader</h5>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                @if (@b.NewsText.Length > 200)
+                {
+                    <h5>@b.NewsText.Substring(0, 200)...</h5>
+                }
+                else
+                {
+                    <h5>@b.NewsText</h5>
+                }
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1">
+                <h5>
+                    <a href="/News/DescriptionNews/@b.NewsId"> Просмотреть </a> <br />
+                    <a href="/News/EditNews/@b.NewsId"> Изменить </a>           <br />
+                    <a href="/News/DelNews/@b.NewsId">  Удалить</a>            <br />
+                </h5>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,86 @@
+﻿
+@model PagedList.IPagedList<FleaMarket.Models.News>
+@using PagedList.Mvc;
+@{ 
+    ViewBag.Title = "Список новостей для редактирования";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+<div>
+    @using (Ajax.BeginForm("ListNewsPart", new AjaxOptions { UpdateTargetId = "searchresults" }))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-sm-10 col-md-10 col-lg-10">
+                    <input type="button" value="Мои новости" onclick="@("window.location.href='" + @Url.Action("ListNews", "News") + "'");" class="btn btn-default btn-primary" />
+                </div>
+                <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                    <input type="button" value="Добавить новую" onclick="@("window.location.href='" + @Url.Action("AddNewNews", "News") + "'");" class="btn btn-success" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    @Html.Label("NewsCatId", "Категория новостей")   <br />
+                    @Html.DropDownList("NewsCatId", ViewBag.NewsCat as SelectList, new { id = "NewsCatId", @class = "form-control" })
+                </div>
+            </div>
+        </div> 
+    }
+     
+    <div id="loading" style="display:none; color:Red; font-weight:bold;">
+        <p>Идет загрузка...</p>
+    </div>
+    <div id="searchresults">
+        @foreach (FleaMarket.Models.News b in Model)
+        {
+            <hr />
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <h5>@b.NewsHeader</h5>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                    @if (@b.NewsText.Length > 200)
+                {
+                        <h5>@b.NewsText.Substring(0, 200)...</h5>
+                    }
+                    else
+                    {
+                        <h5>@b.NewsText</h5>
+                    }
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                    <h5>
+                        <a href="/News/DescriptionNews/@b.NewsId" class="btn-default  btn-xs" > Просмотреть </a> <br />
+                        <a href="/News/EditNews/@b.NewsId" class="btn-info  btn-xs"> Изменить </a>           <br />
+                        <a href="/News/DelNews/@b.NewsId" class="btn-primary  btn-xs">  Удалить</a>            <br />
+                    </h5>
+                </div>
+            </div>
+        }
+    </div>
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    @Scripts.Render("~/scripts/jquery-1.10.2.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#NewsCatId').change(function () {
+                // получаем выбранный id
+                var id = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ListNewsPart")/' + id,
+                    success: function (data) {
+                        // заменяем содержимое присланным частичным представлением
+                        $('#searchresults').replaceWith(data);
+                    }
+                });
+            });
+        })
+    </script>
+}

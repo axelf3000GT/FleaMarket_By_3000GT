@@ -1,0 +1,194 @@
+﻿@model IEnumerable<FleaMarket.Models.News>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HomePage</title>
+</head>
+<body>
+    <div class="container">
+        <div class="col-xs-12" style="background-color:white">
+
+            <div class="hovergallery">
+                @{  int i = 1;
+            int mod = 1;
+
+            foreach (FleaMarket.Models.News b in Model)
+            {
+                if (mod == 1)
+                {
+                            <div class="col-md-6 col-sm-6 col-lg-6 clearfix visible-md visible-sm visible-lg ">
+                                <a href="/News/DescriptionNews/@b.NewsId">
+                                    <div class="thumbnail text-center image" style="height:420px">
+                                        <img src="~/content/images/@b.NewsImageLogo" alt="Lights">
+
+                                        @if (@b.NewsHeader.Length > 56)
+                                    {
+                                            <h2><span> @b.NewsHeader.Substring(0, 56)...</span></h2>
+                                    }
+                                    else
+                                    {
+                                            <h2><span>  @b.NewsHeader</span></h2>
+                                    }
+
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-xs-12 clearfix visible-xs">
+                                <a href="/News/DescriptionNews/@b.NewsId">
+                                    <div class="thumbnail text-center image">
+                                        <img src="~/content/images/@b.NewsImageLogo" alt="Lights">
+                                        <div class="caption">
+                                            @if (@b.NewsHeader.Length > 56)
+                                    {
+                                                <h2><span> @b.NewsHeader.Substring(0, 56)...</span></h2>
+                                    }
+                                    else
+                                    {
+                                                <h2><span>  @b.NewsHeader</span></h2>
+                                    }
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+
+
+
+                }
+
+                else if (mod == 2)
+                {
+
+                            <div class="col-md-5">
+                                <a href="/News/DescriptionNews/@b.NewsId">
+                                    <div class="thumbnail text-center">
+
+                                        <img src="~/content/images/@b.NewsImageLogo" alt="Lights">
+
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="thumbnail  text-justify">
+                                    <div class="caption">
+                                        <a href="/News/DescriptionNews/@b.NewsId">
+                                            <h3> @b.NewsHeader</h3>
+                                            @if (@b.NewsTextDescription.Length > 500)
+                                    {
+                                                <p> @b.NewsTextDescription.Substring(0, 500)...</p>
+                                    }
+                                    else
+                                    {
+                                                <p>  @b.NewsTextDescription...</p>
+                                    }
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                }
+                else if (mod == 3)
+                {
+
+                            <div class="col-md-5 clearfix visible-xs visible-sm">
+                                <a href="/News/DescriptionNews/@b.NewsId">
+                                    <div class="thumbnail text-center">
+                                        <img src="~/content/images/@b.NewsImageLogo" alt="Lights">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-7 ">
+                                <div class="thumbnail  text-justify">
+                                    <div class="caption">
+                                        <a href="/News/DescriptionNews/@b.NewsId">
+                                            <h3> @b.NewsHeader</h3>
+                                            @if (@b.NewsTextDescription.Length > 500)
+                                    {
+                                                <p> @b.NewsTextDescription.Substring(0, 500)...</p>
+                                    }
+                                    else
+                                    {
+                                                <p>  @b.NewsTextDescription...</p>
+                                    }
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 clearfix visible-lg visible-md ">
+                                <a href="/News/DescriptionNews/@b.NewsId">
+                                    <div class="thumbnail text-center">
+                                        <img src="~/content/images/@b.NewsImageLogo" alt="Lights">
+                                    </div>
+                                </a>
+                            </div>
+                }
+
+                else if (mod == 4)
+                {
+                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                <div class="thumbnail text-center" style="height:220px">
+                                    <a href="/News/DescriptionNews/@b.NewsId">
+
+                                        <img src="~/content/images/@b.NewsImageLogoMini" alt="Lights">
+
+                                        <div class="caption">
+                                            @if (@b.NewsHeader.Length > 56)
+                                    {
+                                                <p> @b.NewsHeader.Substring(0, 56)...</p>
+                                    }
+                                    else
+                                    {
+                                                <p>  @b.NewsHeader</p>
+                                    }
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                }
+
+                if (mod == 1 && i % 2 == 0)
+                { <div class="row"></div>
+                    mod = 2;
+                }
+                else if (mod == 2)
+                { <div class="row"></div>
+                    mod = 3;
+                }
+                else if (mod == 3)
+                { <div class="row"></div>
+                    mod = 4;
+                }
+                else if (mod == 4 && i == 12)
+                { <div class="row"></div>
+                    mod = 2;
+                }
+
+                i++;
+            }
+
+                }
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+@section metatags
+    {
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <meta name="copyright" content="Все права принадлежат Дорожко Александру Юрьевичу. Использование любых материалов возможно только с разрешения автора и при указании источника">
+    <meta name="author" content="Дорожко Александр">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="новости,отличная барахолка, дешево, лучшее, дешевле, новее, красивее, быстро, богато, барахолка, барахолка Минск, барахолка Беларусь, сайт по продаже бу, продам в минске, продажа бвывшего в употреблений, отличная барахолка, барахолочка, ждановичи барахолка, просто барахолка, дешево купить, дешево продать">
+    <meta name="description" content="Все объявления барахолки, у нас дешево всё продаётся, только лучшее">
+
+}

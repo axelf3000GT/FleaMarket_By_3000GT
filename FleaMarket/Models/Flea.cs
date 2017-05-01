@@ -25,7 +25,7 @@ namespace FleaMarket.Models
         [HiddenInput(DisplayValue = false)]
         public int AdTypeId { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено")]
-        public String AdHeader { get; set; }
+        public String AdTopic { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено")]
         [DataType(DataType.MultilineText)]
         public String AdText { get; set; }
@@ -33,13 +33,20 @@ namespace FleaMarket.Models
         public double? AdCost { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено")]
         public String AdPhoneNumber { get; set; }
-        public byte[] Image1 { get; set; }
-        public byte[] Image2 { get; set; }
-        public byte[] Image3 { get; set; }
-        public byte[] Image4 { get; set; }
-        public byte[] Image5 { get; set; }
-        public byte[] Image6 { get; set; }
+        public String Image1 { get; set; }
+        public String Image1min { get; set; }
+        public String Image2 { get; set; }
+        public String Image2min { get; set; }
+        public String Image3 { get; set; }
+        public String Image3min { get; set; }
+        public String Image4 { get; set; }
+        public String Image4min { get; set; }
+        public String Image5 { get; set; }
+        public String Image5min { get; set; }
+        public String Image6 { get; set; }
+        public String Image6min { get; set; }
         public int AdLocationId { get; set; }
+        public String AdCity { get; set; }
         
         public DateTime AdDateAdd { get; set; }
         public DateTime? AdDateUpdate { get; set; }
@@ -98,12 +105,15 @@ namespace FleaMarket.Models
     public class News
     {
         public int NewsId { get; set; }
-        public int NewsCatId { get; set; }
+        public int NewsCatId { get; set; } 
         public String NewsHeader { get; set; }
         public String NewsText { get; set; }
         public DateTime NewsDateAdd { get; set; }
         public DateTime? NewsDateLastEditing { get; set; }
         public String NewsUserId { get; set; }
+        public String NewsImageLogoMini { get; set; }
+        public String NewsImageLogo { get; set; }
+        public String NewsTextDescription { get; set; }
         NewsCat NewsCat { get; set; }
 
     }
@@ -111,7 +121,7 @@ namespace FleaMarket.Models
     public class NewsCat
     {
         public int NewsCatId { get; set; }
-        public String NewsCatHeader { get; set; }
+        public String NewsCatHeader { get; set; } 
         public IEnumerable<News> Newss { get; set; }
     }
 
@@ -123,6 +133,16 @@ namespace FleaMarket.Models
         [Required(ErrorMessage = "Поле должно быть заполнено")]
         [DataType(DataType.MultilineText)]
         public String AdText { get; set; } 
-    } 
+    }
+    public class Op
+    {
+        public int OpId { get; set; }
+        public String OpCat { get; set; }
+        public int OpCatId { get; set; }
+        public String OpUserName { get; set; } 
+        public String OpText { get; set; }
+        public int OpLikes { get; set; }
+        public DateTime OpDateAdd { get; set; }
+    }
 
 }

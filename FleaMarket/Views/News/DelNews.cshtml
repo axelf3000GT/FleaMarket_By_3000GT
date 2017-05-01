@@ -1,0 +1,50 @@
+﻿@model FleaMarket.Models.News
+
+<br />
+
+ 
+ <div class="container">
+    <div class="col-md-offset-3 col-md-6">
+        <div class="panel panel-primary ">
+            <div class="panel-heading">
+                <h3 style="color:white">Внимание!</h3>
+            </div>
+            <div class="panel-body bg-info">
+                <h4>Вы действительно хотите удалить данную новость?</h4>
+                <input type="button" value="Да, удалить" onclick="@("window.location.href='" + @Url.Action("DelNewsConfirmed", "News")+"/"+Model.NewsId + "'");" class="btn btn-danger btn-primary" />
+                <input type="button" value="Нет" onclick="@("window.location.href='" + @Url.Action("ListNews", "News") + "'");" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+</div>
+<table align="center">
+    <tr>
+        <td width="250px" valign="top"></td>
+        <td width="5px" valign="top"></td>
+        <td width="460px" valign="top">
+            <br />
+            <table border="0" align="center">
+                <td width="25px" valign="top"></td>
+                <td width="435px" valign="top">
+                    <h4>@Html.DisplayFor(model => model.NewsHeader)</h4>
+                    <h6>@Html.Raw(Model.NewsText) </h6>
+                </td>
+            </table>
+        </td>
+        <td width="30px" valign="top"></td>
+        <td width="250px" valign="top">
+
+    </tr>
+</table>
+
+
+@section metatags
+{
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <meta name="copyright" content="Все права принадлежат Дорожко Александру Юрьевичу. Использование любых материалов возможно только с разрешения автора и при указании источника">
+    <meta name="author" content="Дорожко Александр">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Отличная бесплатная барахолка! Продать можно что угодно, дешево, лучшее, дешевле, новее, красивее, быстро, богато, начиная от булавки, заканчивая домами, отличная барахолка, барахолка, барахолка Минск, барахолка Беларусь, сайт по продаже бу, продам в минске, продажа бвывшего в употреблений, отличная барахолка, барахолочка, ждановичи барахолка, просто барахолка, дешево купить, дешево продать">
+    <meta name="description" content="Отличная бесплатная барахолка! Продать можно что угодно, начиная от булавки, заканчивая домами!">
+
+}

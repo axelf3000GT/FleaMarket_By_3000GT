@@ -16,7 +16,7 @@ namespace FleaMarket
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "FleaMarket", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "FleaMarket", action = "HomePage", id = UrlParameter.Optional }
             );
         }
     }

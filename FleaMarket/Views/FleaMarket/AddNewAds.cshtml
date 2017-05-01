@@ -1,5 +1,8 @@
 ﻿@model FleaMarket.Models.Ad
-
+@{
+    ViewBag.Title = "Добавление нового объявления";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <h4>Добавление объявления: Шаг 2</h4>
 
 @using (Html.BeginForm())
@@ -12,7 +15,7 @@
         <div class="form-group">
             <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
             <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>@ViewBag.AdLocationCountry @ViewBag.AdLocationCity район </b></div>
-            <div class="col-md-5 col-xs-4 col-lg-4">
+            <div class="col-md-5 col-xs-7 col-lg-4">
                 @Html.DropDownList("AdLocationArea", ViewBag.AdLocationArea as SelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AdLocationId, "", new { @class = "text-danger" })
             </div>
@@ -21,7 +24,7 @@
         <div class="form-group">
             <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
             <div class="control-label col-md-2 col-xs-3 col-lg-2 "><b>Раздел</b></div>
-            <div class="col-md-5 col-xs-4 col-lg-4">
+            <div class="col-md-5 col-xs-7 col-lg-4">
                 @Html.DropDownList("AdCatSubHeader", ViewBag.AdCatSubHeader as SelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AdCatId, "", new { @class = "text-danger" })
             </div>
@@ -30,8 +33,8 @@
             <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
             <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>Заголовок</b></div>
             <div class="col-md-8 col-xs-7 col-lg-8">
-                @Html.EditorFor(model => model.AdHeader, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdHeader, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.AdTopic, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdTopic, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -55,8 +58,8 @@
 
         <div class="form-group">
             <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1"></div>
-            <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>Контактный номер</b></div>
-            <div class="col-md-3 col-lg-3 col-sm-5 col-xs-6">
+            <div class="control-label col-md-2 col-xs-3 col-lg-2"><b>Телефон</b></div>
+            <div class="col-md-3 col-lg-3 col-sm-5 col-xs-7">
                 @Html.EditorFor(model => model.AdPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AdPhoneNumber, "", new { @class = "text-danger" })
             </div>
@@ -81,4 +84,14 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+}
+@section metatags
+{
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <meta name="copyright" content="Все права принадлежат Дорожко Александру Юрьевичу. Использование любых материалов возможно только с разрешения автора и при указании источника">
+    <meta name="author" content="Дорожко Александр">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Отличная бесплатная барахолка! Продать можно что угодно, начиная от булавки, заканчивая домами, отличная барахолка, барахолка, барахолка Минск, барахолка Беларусь, сайт по продаже бу, продам в минске, продажа бвывшего в употреблений, отличная барахолка, барахолочка, ждановичи барахолка, просто барахолка, дешево купить, дешево продать">
+    <meta name="description" content="Добавь бесплатно своё объявление и пускай всё узнают, что ты это хочешь продать!">
+
 }

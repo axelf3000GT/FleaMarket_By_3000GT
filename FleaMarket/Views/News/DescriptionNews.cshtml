@@ -1,0 +1,79 @@
+﻿@model FleaMarket.Models.News
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+@using (Html.BeginForm("DescriptionNews", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-xs-12">
+                <div class="panel panel-info clearfix visible-lg visible-md">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Категории</h3>
+                    </div>
+                    <div class="panel-body bg-info">
+                        @Html.Raw(ViewBag.NewsCatLink)
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-9 col-xs-12 panel-title ">
+                <div class="panel panel-info">
+                    <div class="panel-body bg-news-description">
+                        <h4>@Html.DisplayFor(model => model.NewsHeader)</h4>
+                        @Html.Raw(ViewBag.TextRaw)
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="paddings">
+                        <h4>Ваше мнение:</h4>
+                        @Html.TextArea("Comment", new { @class = "form-control", @rows = 4 })
+                        <input type="submit" value="Добавить" class="btn btn-default" />
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="paddings">
+                        @foreach (var b in ViewBag.Op)
+                        {
+                            TempData["NewsId"] = @Model.NewsId;
+                            <h6><small>Автор: @b.OpUserName &nbsp &nbsp &nbsp опубликовано: @b.OpDateAdd </small>  </h6>
+                            <h5>@b.OpText  </h5>
+                            <div class="text-right">  <span style="color: #DC12EE; font-size: 20px; font-family: sans-serif;">&hearts;</span> @b.OpLikes <input type="button" value="Лайк :)" onclick="@("window.location.href='" + @Url.Action("OpinionLike", "News")+"/"+@b.OpId  + "'");" class="btn-sm btn-danger" />  </div>
+
+                            <hr />
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3 col-xs-12 clearfix visible-lg visible-md">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Похожие новости</h3>
+                    </div>
+                    <div class="panel-body bg-info">
+                        @Html.Raw(ViewBag.NewsLink)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@section metatags
+        {
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <meta name="copyright" content="Все права принадлежат Дорожко Александру Юрьевичу. Использование любых материалов возможно только с разрешения автора и при указании источника">
+    <meta name="author" content="Дорожко Александр">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Отличная бесплатная барахолка! Продать можно что угодно, дешево, лучшее, дешевле, новее, красивее, быстро, богато, начиная от булавки, заканчивая домами, отличная барахолка, барахолка, барахолка Минск, барахолка Беларусь, сайт по продаже бу, продам в минске, продажа бвывшего в употреблений, отличная барахолка, барахолочка, ждановичи барахолка, просто барахолка, дешево купить, дешево продать">
+    <meta name="description" content="Отличная бесплатная барахолка! Продать можно что угодно, начиная от булавки, заканчивая домами!">
+
+}
+@section scripts {
+    <script async src="https://www.gismeteo.by/api/informer/getinformer/?hash=5Ir02P7A2G3878" type="text/javascript"></script>
+}
